@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="cordova-plugin-increase-build-number" version="1.0.0" xmlns="http://apache.org/cordova/ns/plugins/1.0">
+    <name>Increase Build Number</name>
+    <description>A Cordova plugin that increases the build number every time a build command is run.</description>
+    <author>Quinten Adema</author>
+
+    <!-- Supported platforms -->
+    <platform name="android"/>
+    <platform name="ios"/>
+
+    <!-- Plugin code -->
+    <js-module src="www/increaseBuildNumber.js" name="IncreaseBuildNumber">
+        <clobbers target="cordova.plugins.IncreaseBuildNumber"/>
+    </js-module>
+
+    <!-- Increase build number on build -->
+    <hook type="after_prepare" src="hooks/increaseBuildNumber.js"/>
+</plugin>
