@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-increase-build-number",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A Cordova plugin that increases the build number every time a build command is run.",
   "repository": {
     "type": "git",
