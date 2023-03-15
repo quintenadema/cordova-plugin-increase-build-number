@@ -8,11 +8,6 @@
     <platform name="android"/>
     <platform name="ios"/>
 
-    <!-- Plugin code -->
-    <js-module src="www/increaseBuildNumber.js" name="IncreaseBuildNumber">
-        <clobbers target="cordova.plugins.IncreaseBuildNumber"/>
-    </js-module>
-
     <!-- Increase build number on build -->
     <hook type="after_prepare" src="hooks/increaseBuildNumber.js"/>
 </plugin>
