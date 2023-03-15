@@ -4,35 +4,43 @@ var fs = require('fs');
 var path = require('path');
 var xml2js = require('xml2js');
 
-var configPath = path.join(__dirname, '..', '..', 'config.xml');
+module.exports = function(context) {
+    var deferral = context.requireCordovaModule('q').defer();
 
-// Read the config.xml file
-fs.readFile(configPath, 'utf8', function (err, data) {
-  if (err) {
-    return console.error(err);
-  }
+    var configPath = path.join(context.opts.projectRoot, 'config.xml');
+    var parser = new xml2js.Parser();
 
-  // Parse the XML
-  var parser = new xml2js.Parser();
-  parser.parseString(data, function (err, result) {
-    if (err) {
-      return console.error(err);
-    }
+    fs.readFile(configPath, function(err, data) {
+        if (err) {
+            deferral.reject(err);
+            return;
+        }
 
-    // Increase the build number
-    var version = result.widget.$.version;
-    var buildNumber = result.widget.$['android-versionCode'] || result.widget.$['ios-CFBundleVersion'] || 0;
-    result.widget.$['android-versionCode'] = buildNumber + 1;
-    result.widget.$['ios-CFBundleVersion'] = buildNumber + 1;
+        parser.parseString(data, function(err, result) {
+            if (err) {
+                deferral.reject(err);
+                return;
+            }
 
-    // Update the config.xml file
-    var builder = new xml2js.Builder();
-    var xml = builder.buildObject(result);
-    fs.writeFile(configPath, xml, function (err) {
-      if (err) {
-        return console.error(err);
-      }
-      console.log('Build number increased to ' + (buildNumber + 1) + ' for version ' + version);
+            var oldVersion = result.widget.$['android-versionCode'];
+            var newVersion = parseInt(oldVersion) + 1;
+
+            result.widget.$['android-versionCode'] = newVersion.toString();
+
+            var builder = new xml2js.Builder();
+            var xml = builder.buildObject(result);
+
+            fs.writeFile(configPath, xml, function(err) {
+                if (err) {
+                    deferral.reject(err);
+                    return;
+                }
+
+                console.log('Build number increased to ' + newVersion);
+                deferral.resolve();
+            });
+        });
     });
-  });
-});
+
+    return deferral.promise;
+};
