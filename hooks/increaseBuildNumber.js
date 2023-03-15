@@ -23,10 +23,14 @@ module.exports = function(context) {
                 return;
             }
 
-            var oldVersion = result.widget.$['android-versionCode'];
-            var newVersion = parseInt(oldVersion) + 1;
+            var androidVersion = result.widget.$['android-versionCode'];
+            var iosVersion = result.widget.$['ios-CFBundleVersion'];
 
-            result.widget.$['android-versionCode'] = newVersion.toString();
+            var newAndroidVersion = parseInt(androidVersion) + 1;
+            var newIosVersion = parseInt(iosVersion) + 1;
+
+            result.widget.$['android-versionCode'] = newAndroidVersion.toString();
+            result.widget.$['ios-CFBundleVersion'] = newIosVersion.toString();
 
             var builder = new xml2js.Builder();
             var xml = builder.buildObject(result);
@@ -37,7 +41,8 @@ module.exports = function(context) {
                     return;
                 }
 
-                console.log('Build number increased to ' + newVersion);
+                console.log('\x1b[33m%s\x1b[0m', '[cordova-plugin-increase-build-number] {ANDROID} build number increased to ' + newAndroidVersion);
+                console.log('\x1b[33m%s\x1b[0m', '[cordova-plugin-increase-build-number] {iOS} build number increased to ' + newIosVersion);
                 deferral.resolve();
             });
         });
