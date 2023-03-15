@@ -3,9 +3,10 @@
 var fs = require('fs');
 var path = require('path');
 var xml2js = require('xml2js');
+var Q = require('q');
 
 module.exports = function(context) {
-    var deferral = context.requireCordovaModule('q').defer();
+    var deferral = Q.defer();
 
     var configPath = path.join(context.opts.projectRoot, 'config.xml');
     var parser = new xml2js.Parser();
