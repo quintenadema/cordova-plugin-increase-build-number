@@ -9,7 +9,7 @@ This plugin can save you time and ensure that your app's build number is always 
 
 ## Installation
 
-    cordova plugin add https://github.com/quintenadema/cordova-plugin-increase-build-number
+    cordova plugin add cordova-plugin-increase-build-number
 
 
 ## Removal
