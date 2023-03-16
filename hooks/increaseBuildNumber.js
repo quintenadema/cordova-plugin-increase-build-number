@@ -41,8 +41,8 @@ module.exports = function(context) {
                     return;
                 }
 
-                console.log('\x1b[33m%s\x1b[0m', '[cordova-plugin-increase-build-number] {ANDROID} build number increased to ' + newAndroidVersion);
-                console.log('\x1b[33m%s\x1b[0m', '[cordova-plugin-increase-build-number] {iOS} build number increased to ' + newIosVersion);
+                console.log('\x1b[35m%s\x1b[0m', '[cordova-plugin-increase-build-number] {ANDROID} build number increased to ' + newAndroidVersion);
+                console.log('\x1b[35m%s\x1b[0m', '[cordova-plugin-increase-build-number] {iOS} build number increased to ' + newIosVersion);
                 deferral.resolve();
             });
         });
